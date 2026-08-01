@@ -1,4 +1,6 @@
 // ── DATOS ──
+// Número de WhatsApp del negocio (formato internacional sin + ni espacios)
+const WHATSAPP='59894421186';
 const P={
   c:{label:'Compacto',    basico:790, completo:1000,premium:1680,exterior:560,interior:700,artesanal:700},
   a:{label:'Auto/Cross.', basico:890, completo:1110,premium:1960,exterior:670,interior:800,artesanal:800},
@@ -118,7 +120,7 @@ function renderPlans(){
       <div class="plan-bd">
         <div class="pvtabs">${Object.entries(VL).map(([k,v])=>`<button class="pvtab${k==='c'?' active':''}" onclick="updPlan('${pl.id}','${k}',${pl.disc},${pl.lavs},'${pl.id==='esen'?'basico':pl.id==='comp'?'completo':'premium'}',this)">${v}</button>`).join('')}</div>
         ${pl.feats.map(f=>`<div class="pf"><span class="ck">✓</span><span>${f}</span></div>`).join('')}
-        <a href="#reservas" class="plan-btn ${pl.btn}">Suscribirme →</a>
+        <a href="#" onclick="suscribirWA('${pl.nm}');return false;" class="plan-btn ${pl.btn}">Suscribirme →</a>
       </div>
     </div>`;
   }).join('');
@@ -234,13 +236,51 @@ function submitReserva(){
   const suc=document.getElementById('resSucursal').value;
   const svc=document.getElementById('resServicio').value;
   if(!nm||!tel||!pat||!suc||!svc||!selDate||!selTime){showToast('⚠ Completá todos los campos.');return;}
-  const sucLabel=suc==='2030'?'Las Focas':'Roosevelt';
-  const dateStr=`${selDate.d} de ${MESES[selDate.m]}`;
+  const sucLabel=suc==='2030'?'Las Focas / El Remanso (20/30)':'Naciones Unidas / Roosevelt';
+  const dateStr=`${selDate.d} de ${MESES[selDate.m]} de ${selDate.y}`;
   const tipo=resType==='lavadero'?'Lavadero':'Lubricentro';
-  showToast(`✓ ${tipo} confirmado — ${dateStr} ${selTime} en ${sucLabel}. Confirmamos por WhatsApp.`);
+  const svcList=resType==='lavadero'?SVC_LAVADERO:SVC_LUBRI;
+  const svcObj=svcList.find(s=>s.v===svc);
+  const svcName=svcObj?svcObj.n:svc;
+  const vehExtra=document.getElementById('resVehiculo')?document.getElementById('resVehiculo').value.trim():'';
+  let msg=`Hola! Quiero reservar un turno de *${tipo}* en Veinte&30 CarWash.\n\n`;
+  msg+=`📋 *Servicio:* ${svcName}\n`;
+  msg+=`📅 *Fecha:* ${dateStr}\n`;
+  msg+=`🕐 *Hora:* ${selTime}\n`;
+  msg+=`📍 *Sucursal:* ${sucLabel}\n`;
+  msg+=`🚗 *Matrícula:* ${pat.toUpperCase()}\n`;
+  if(vehExtra) msg+=`🔧 *Vehículo:* ${vehExtra}\n`;
+  msg+=`\n👤 *Nombre:* ${nm}\n`;
+  msg+=`📱 *Teléfono:* ${tel}\n`;
+  msg+=`\n¡Quedo a la espera de la confirmación! Gracias.`;
+  const url=`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  showToast('✓ Abriendo WhatsApp para confirmar tu reserva...');
+  setTimeout(()=>window.open(url,'_blank'),600);
 }
 function toggleSubmit(){
   document.getElementById('resSubmit').disabled=!document.getElementById('resCheck').checked;
+}
+function submitContacto(){
+  const nm=document.getElementById('ctNombre').value.trim();
+  const tel=document.getElementById('ctTel').value.trim();
+  const mot=document.getElementById('ctMotivo').value;
+  const suc=document.getElementById('ctSuc').value;
+  const consulta=document.getElementById('ctMsg').value.trim();
+  if(!nm||!consulta){showToast('⚠ Completá al menos tu nombre y la consulta.');return;}
+  let msg=`Hola! Tengo una consulta para Veinte&30 CarWash.\n\n`;
+  msg+=`👤 *Nombre:* ${nm}\n`;
+  if(tel) msg+=`📱 *Teléfono:* ${tel}\n`;
+  if(mot) msg+=`📋 *Motivo:* ${mot}\n`;
+  if(suc) msg+=`📍 *Sucursal:* ${suc}\n`;
+  msg+=`\n💬 *Consulta:* ${consulta}`;
+  const url=`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  showToast('✓ Abriendo WhatsApp...');
+  setTimeout(()=>window.open(url,'_blank'),600);
+}
+function suscribirWA(plan){
+  const msg=`Hola! Me interesa la suscripción *${plan}* de Veinte&30 CarWash. ¿Me pueden dar más info para suscribirme? Gracias!`;
+  const url=`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  window.open(url,'_blank');
 }
 
 // ── MENÚ CAFETERÍA ──

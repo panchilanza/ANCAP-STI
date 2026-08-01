@@ -263,7 +263,7 @@
       <h3>Ganás <em>1 punto</em> por cada $50 de consumo</h3>
       <p>Cada lavado, cada café, cada carga de combustible y cada servicio del lubricentro suma puntos a tu cuenta automáticamente.</p>
       <p>Acumulá puntos y subí de nivel — <strong>cuanto más alto el nivel, mejores los beneficios</strong>. Sin trámites complicados, sin tarjetas físicas: todo asociado a la patente de tu vehículo.</p>
-      <a href="#contacto" class="btn-primary" style="margin-top:10px">Sumarme al programa →</a>
+      <a href="#" onclick="suscribirWA('Programa de Fidelidad Rewards');return false;" class="btn-primary" style="margin-top:10px">Sumarme al programa →</a>
     </div>
     <div class="fid-card-visual">
       <div class="fc-brand"><div class="bar"></div>REWARDS</div>
@@ -558,18 +558,18 @@
   <div class="ct-grid fi">
     <div class="ct-form">
       <h3>ENVIAR CONSULTA</h3>
-      <div class="fg" style="margin-bottom:14px"><label>Nombre</label><input type="text" placeholder="Tu nombre completo"></div>
-      <div class="fg" style="margin-bottom:14px"><label>WhatsApp</label><input type="tel" placeholder="+598 09X XXX XXX"></div>
+      <div class="fg" style="margin-bottom:14px"><label>Nombre</label><input type="text" id="ctNombre" placeholder="Tu nombre completo"></div>
+      <div class="fg" style="margin-bottom:14px"><label>WhatsApp</label><input type="tel" id="ctTel" placeholder="+598 09X XXX XXX"></div>
       <div class="fg" style="margin-bottom:14px">
         <label>Motivo</label>
-        <select><option value="">Seleccioná</option><option>Reservas / turnos</option><option>Suscripciones</option><option>Programa de fidelidad</option><option>Car Detail</option><option>Lubricentro</option><option>Otro</option></select>
+        <select id="ctMotivo"><option value="">Seleccioná</option><option>Reservas / turnos</option><option>Suscripciones</option><option>Programa de fidelidad</option><option>Car Detail</option><option>Lubricentro</option><option>Otro</option></select>
       </div>
-      <div class="fg" style="margin-bottom:14px"><label>Sucursal</label><select><option value="">Seleccioná</option><option>Las Focas / El Remanso (20/30)</option><option>Naciones Unidas / Roosevelt</option><option>Ambas</option></select></div>
-      <div class="fg" style="margin-bottom:18px"><label>Consulta</label><textarea placeholder="¿En qué podemos ayudarte?" style="height:100px;resize:vertical"></textarea></div>
-      <button class="ct-submit" onclick="showToast('✓ Consulta enviada. Te contactamos pronto.')">Enviar consulta →</button>
+      <div class="fg" style="margin-bottom:14px"><label>Sucursal</label><select id="ctSuc"><option value="">Seleccioná</option><option>Las Focas / El Remanso (20/30)</option><option>Naciones Unidas / Roosevelt</option><option>Ambas</option></select></div>
+      <div class="fg" style="margin-bottom:18px"><label>Consulta</label><textarea id="ctMsg" placeholder="¿En qué podemos ayudarte?" style="height:100px;resize:vertical"></textarea></div>
+      <button class="ct-submit" onclick="submitContacto()">Enviar consulta →</button>
     </div>
     <div class="ct-info">
-      <div class="ci"><div class="cii">📱</div><div class="cit">WhatsApp</div><div class="cid">20/30: <a href="https://wa.me/598099000000">+598 099 000 000</a><br>Roosevelt: <a href="https://wa.me/598098000000">+598 098 000 000</a></div></div>
+      <div class="ci"><div class="cii">📱</div><div class="cit">WhatsApp</div><div class="cid"><a href="https://wa.me/59894421186" target="_blank">+598 94 421 186</a><br>Administración · ambas sucursales</div></div>
       <div class="ci"><div class="cii">📍</div><div class="cit">Sucursales</div><div class="cid"><strong style="color:var(--white)">20/30:</strong> Las Focas esq. El Remanso, PDE<br><br><strong style="color:var(--white)">Roosevelt:</strong> Naciones Unidas 55, Parada 11</div></div>
       <div class="ci"><div class="cii">🕐</div><div class="cit">Horarios</div><div class="cid">Lun–Vie: 08:00–19:00<br>Sábados: 08:00–18:00<br>Dom y feriados: 09:00–15:00</div></div>
       <div class="ci"><div class="cii">⭐</div><div class="cit">Programa Rewards</div><div class="cid">Acumulá puntos en cada servicio. <a onclick="document.getElementById('fidelidad').scrollIntoView({behavior:'smooth'})">Conocé el programa →</a></div></div>
